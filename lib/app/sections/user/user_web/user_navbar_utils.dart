@@ -4,7 +4,8 @@ class UserNavBarUtils {
   static const List<String> names = [
     'Property List',
     'Bookings',
-    'Favourites'
+    'Favourites',
+    'Log Out'
   ];
 
   static const List<String> dnames = [

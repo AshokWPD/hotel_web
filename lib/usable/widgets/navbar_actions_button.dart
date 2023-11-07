@@ -51,8 +51,8 @@ class _NavBarActionButtonState extends State<NavBarActionButton> {
             style: TextStyle(
                 color: isHover ? secondaryColor : primaryColor,
                 fontFamily: 'josefinsans',
-                fontWeight: FontWeight.w300,
-                fontSize: screenWidth < 1200 ? 20 : 25),
+                fontWeight: FontWeight.w400,
+                fontSize: screenWidth < 1200 ? 15 : 20),
           ),
         ),
       ),
