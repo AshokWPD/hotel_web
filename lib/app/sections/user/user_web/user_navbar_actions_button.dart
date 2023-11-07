@@ -5,6 +5,8 @@ import 'package:absolute_stay_site/usable/core/animations/entrance_fader.dart';
 import 'package:absolute_stay_site/usable/core/color/colors.dart';
 import 'package:flutter/material.dart';
 
+import '../../main/main_section.dart';
+
 
 class UserNavBarActionButton extends StatefulWidget {
   final String label;
@@ -39,6 +41,9 @@ class _UserNavBarActionButtonState extends State<UserNavBarActionButton> {
             case 1:
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PropertyList()));
               break;
+            case 4:
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MainPage()));
+              break;
           }
         },
         child: Padding(
@@ -48,8 +53,8 @@ class _UserNavBarActionButtonState extends State<UserNavBarActionButton> {
             style: TextStyle(
                 color: isHover ? secondaryColor : primaryColor,
                 fontFamily: 'josefinsans',
-                fontWeight: FontWeight.w300,
-                fontSize: screenWidth < 1200 ? 20 : 25),
+                fontWeight: FontWeight.w400,
+                fontSize: screenWidth < 1200 ? 15 : 20),
           ),
         ),
       ),

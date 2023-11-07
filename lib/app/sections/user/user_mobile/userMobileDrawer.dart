@@ -1,4 +1,5 @@
 import 'package:absolute_stay_site/app/sections/about/about.dart';
+import 'package:absolute_stay_site/app/sections/main/main_section.dart';
 import 'package:absolute_stay_site/app/sections/main/property/property_mobile/PropertyListingPage.dart';
 import 'package:absolute_stay_site/app/sections/main/property/propertylist.dart';
 import 'package:absolute_stay_site/app/sections/user/user_web/UserCustomdialogue.dart';
@@ -50,9 +51,9 @@ class _UserMobileDrawerState extends State<UserMobileDrawer> {
                       case 0:
                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PropertyList()));
                         break;
-                    // case 1:
-                    //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AboutPage()));
-                    //   break;
+                     case 3:
+                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MainPage()));
+                       break;
                     }
                   },
                       child:ListTile(

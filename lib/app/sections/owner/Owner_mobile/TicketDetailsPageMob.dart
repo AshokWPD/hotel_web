@@ -121,9 +121,15 @@ class TicketDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ticket Details'),
-        centerTitle: true,
         backgroundColor: Colors.white,
+        title: const Text(
+          'Ticket Details',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class UnoccupiedListMobile extends StatefulWidget {
   const UnoccupiedListMobile({super.key});
@@ -59,6 +60,7 @@ class _UnoccupiedListMobileState extends State<UnoccupiedListMobile> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        width: 35.w,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: propertyData.asMap().entries.map((entry) {

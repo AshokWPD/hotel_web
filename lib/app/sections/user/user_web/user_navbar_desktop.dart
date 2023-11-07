@@ -1,4 +1,5 @@
 import 'package:absolute_stay_site/app/sections/Animated_dialogue/login_options.dart';
+import 'package:absolute_stay_site/app/sections/user/user_web/user_profile_web.dart';
 import 'package:absolute_stay_site/app/utils/CustomDialog.dart';
 import 'package:absolute_stay_site/app/utils/navbar_utils.dart';
 import 'package:absolute_stay_site/usable/core/color/colors.dart';
@@ -93,7 +94,7 @@ class _UserNavbarWebState extends State<UserNavbarWeb> {
                 onTap: _hideDialog,
                 child: Container(
                   color: Colors.black.withOpacity(0.5), // Add a semi-transparent background
-                  child: const LoginOptions(),
+                  child: const UserProfileWeb(),
                 ),
               ),
             ),

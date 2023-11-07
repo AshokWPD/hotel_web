@@ -4,6 +4,8 @@ class NavBarUtils {
   static const List<String> names = [
     'Property List',
     'About Us',
+    '+91 7845745809',
+    'helpdesk@absolutestay.co.in'
   ];
 
   static const List<String> dnames = [

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:absolute_stay_site/app/sections/about/about.dart';
+import 'package:absolute_stay_site/app/sections/main/main_section.dart';
 import 'package:absolute_stay_site/usable/PropertySelection.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -142,16 +143,14 @@ class _AddPropertyMobileState extends State<AddPropertyMobile> {
           ),
         );
         break;
-      // case 'logout':
-      //   Navigator.pop(context); // Close the drawer if it's open
+       case 'logout':
+         Navigator.pop(context); // Close the drawer if it's open
       //   File_server.clearAllLDB(context);
-      //   Navigator.pushAndRemoveUntil(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => const HomePage()),
+         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MainPage()));
       //         (Route<dynamic> route) => false,
       //   );
       //   // Perform logout action
-      //   break;
+         break;
       default:
       // Handle other selections if needed
         break;

@@ -1,4 +1,5 @@
 import 'package:absolute_stay_site/app/sections/about/about.dart';
+import 'package:absolute_stay_site/app/sections/main/main_section.dart';
 import 'package:absolute_stay_site/usable/core/color/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -246,7 +247,7 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
                         leading: Icon(menuIcons['logout']),
                         title: const Text('Logout'),
                         onTap: () {
-
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MainPage()));
                         },
                       ),
                     ],

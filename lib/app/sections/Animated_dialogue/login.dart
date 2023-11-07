@@ -265,7 +265,9 @@ void loginuser(){
                 ),
                 GestureDetector(
                   onTap: (){
-                    _showAnimatedDialog(context, const ForgotPassword());
+                    _showAnimatedDialog(context, const Align(
+                      alignment: Alignment.topRight,
+                        child: ForgotPassword()));
                   },
                   child: Container(
                     padding: const EdgeInsets.only(right: 24.0),
