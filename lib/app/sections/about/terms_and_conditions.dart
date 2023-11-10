@@ -184,9 +184,9 @@ class TermsAndConditionsPage extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 30.0),
                 Container(
-                  color: Colors.grey.shade200,
+                  color: Colors.black,
                   child: Column(
                     children: [
                       Padding(
@@ -201,6 +201,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                               },
                               child: const Icon(
                                 FontAwesomeIcons.instagram,
+                                color: Colors.white,
                               ),
                             ),
                             // Facebook Icon with URL
@@ -210,6 +211,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                               },
                               child: const Icon(
                                 FontAwesomeIcons.facebook,
+                                color: Colors.white,
                               ),
                             ),
                             // Twitter Icon with URL
@@ -219,35 +221,42 @@ class TermsAndConditionsPage extends StatelessWidget {
                               },
                               child: const Icon(
                                 FontAwesomeIcons.twitter,
+                                color: Colors.white,
                               ),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 20.0),
-                      ListTile(
-                        title: const Text('Cookie Policy for App'),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const CookiePolicyPage(),
-                            ),
-                          );
-                        },
-                      ),
-
-                      ListTile(
-                        title: const Text('Privacy Policy'),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PrivacyPolicyPage(),
-                            ),
-                          );
-                        },
-                      ),
+                      const Column(
+                        children: [
+                          Text(
+                            'Terms and Conditions',
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, wordSpacing: 2.0,color: Colors.white,),
+                          ),
+                          SizedBox(height: 20.0),
+                          Text(
+                            'Privacy Policy for Website',
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, wordSpacing: 2.0,color: Colors.white,),
+                          ),
+                          SizedBox(height: 20.0),
+                          Text(
+                            'Cookie Policy for Website',
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, wordSpacing: 2.0,color: Colors.white,),
+                          ),
+                          SizedBox(height: 20.0),
+                          Divider(
+                            color: Colors.white,
+                            thickness: 2,
+                          ),
+                          SizedBox(height: 20.0),
+                          Text(
+                            'Copyright © 2020.Absolute Stays. All rights reserved.',
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, wordSpacing: 2.0,color: Colors.white,),
+                          ),
+                          SizedBox(height: 20.0),
+                        ],
+                      )
                     ],
                   ),
                 ),

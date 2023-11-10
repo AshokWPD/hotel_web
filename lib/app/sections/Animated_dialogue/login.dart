@@ -203,7 +203,7 @@ void loginuser(){
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       height: _dialogHeight,
       width: _dialogWidth,

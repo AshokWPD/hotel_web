@@ -17,7 +17,7 @@ class _FooterTabState extends State<FooterTab> {
   Widget build(BuildContext context) {
     final screenwidth = MediaQuery.of(context).size.width;
     return Container(
-      height: 30.h,
+      height: 35.h,
       width: 100.w,
       color: textColor,
       child: Stack(

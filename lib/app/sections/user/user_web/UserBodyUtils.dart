@@ -5,12 +5,14 @@ import 'package:absolute_stay_site/app/sections/services/services.dart';
 import 'package:absolute_stay_site/usable/core/providers/scroll_provider.dart';
 import 'package:flutter/material.dart';
 
+import 'User_contact/User_contact.dart';
+
 class UserBodyUtils {
   static List<Widget> views(ScrollProvider scrollProvider) {
     return [
       const Home(),
       const Services(),
-      const Contact(),
+      const UserContact(),
       const Footer(),
     ];
   }

@@ -216,7 +216,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
 
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       height: _dialogHeight+35,
       width: _dialogWidth,
