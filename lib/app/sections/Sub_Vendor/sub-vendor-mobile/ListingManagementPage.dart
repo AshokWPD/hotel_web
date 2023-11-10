@@ -33,9 +33,15 @@ class _TenantListPageState extends State<TenantListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tenant List'),
-        centerTitle: true,
         backgroundColor: Colors.white,
+        title: const Text(
+          'Tenant List',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: ListView.builder(
         itemCount: tenantList.length,

@@ -17,9 +17,15 @@ class _VacantListPageState extends State<VacantListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:Text('Vacant List',style: TextStyle(color: customColor,fontSize: 25),),
-        centerTitle: true,
         backgroundColor: Colors.white,
+        title: const Text(
+          'Vacant List',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body:  const SingleChildScrollView(
         child: Padding(

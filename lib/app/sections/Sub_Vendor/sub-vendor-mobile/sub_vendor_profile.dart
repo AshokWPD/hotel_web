@@ -3,14 +3,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
-class SubVendorProfileScreen extends StatefulWidget {
-  const SubVendorProfileScreen({Key? key});
+class SubVendorProfileScreenMob extends StatefulWidget {
+  const SubVendorProfileScreenMob({Key? key});
 
   @override
-  _SubVendorProfileScreenState createState() => _SubVendorProfileScreenState();
+  _SubVendorProfileScreenMobState createState() => _SubVendorProfileScreenMobState();
 }
 
-class _SubVendorProfileScreenState extends State<SubVendorProfileScreen> {
+class _SubVendorProfileScreenMobState extends State<SubVendorProfileScreenMob> {
   final TextEditingController _userIdController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -45,112 +45,110 @@ class _SubVendorProfileScreenState extends State<SubVendorProfileScreen> {
           ),
         ),
         centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Center(
-          child: SizedBox(
-            width: 35.w,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                ClipOval(
-                  child: Lottie.asset(
-                    'images/profile.json', // Replace with your animation file path
-                    width: 80,
-                    height: 80,
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              ClipOval(
+                child: Lottie.asset(
+                  'images/profile.json', // Replace with your animation file path
+                  width: 80,
+                  height: 80,
                 ),
-                const SizedBox(height: 30.0),
-                buildEditableField(
-                  title: 'User ID',
-                  controller: _userIdController,
-                ),
-                const SizedBox(height: 15.0),
-                buildEditableField(
-                  title: 'Name',
-                  controller: _nameController,
-                ),
-                const SizedBox(height: 15.0),
-                buildEditableField(
-                  title: 'Email',
-                  controller: _emailController,
-                ),
-                const SizedBox(height: 15.0),
-                buildEditableField(
-                  title: 'Mobile',
-                  controller: _mobileController,
-                ),
-                const SizedBox(height: 15.0),
-                buildEditableField(
-                  title: 'Address',
-                  controller: _addressController,
-                ),
-                const SizedBox(height: 15.0),
-                buildEditableField(
-                  title: 'City',
-                  controller: _cityController,
-                ),
-                const SizedBox(height: 15.0),
-                buildEditableField(
-                  title: 'Pincode',
-                  controller: _pincodeController,
-                ),
-                const SizedBox(height: 15.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Toggle editing mode
-                        setState(() {
-                          _isEditing = !_isEditing;
-                        });
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                              (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.pressed)) {
-                              return const Color.fromRGBO(33, 84, 115, 1.0);
-                            }
-                            return const Color.fromRGBO(33, 37, 41, 1.0);
-                          },
-                        ),
-                      ),
-                      child: Text(_isEditing ? 'Cancel' : 'Edit', style: const TextStyle(color: Colors.white)),
-                    ),
-                    ElevatedButton(
-                      onPressed: _isEditing
-                          ? () async {
-                        showToast('Profile Updated Successfully');
-                        /* Perform save operation here */
-
-                        // Disable editing mode after saving
-                        setState(() {
-                          _isEditing = false;
-                        });
-                      }
-                          : null, // Disable the button if not editing
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                              (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.pressed)) {
-                              return const Color.fromRGBO(33, 37, 41, 1.0);
-                            }
+              ),
+              const SizedBox(height: 30.0),
+              buildEditableField(
+                title: 'User ID',
+                controller: _userIdController,
+              ),
+              const SizedBox(height: 15.0),
+              buildEditableField(
+                title: 'Name',
+                controller: _nameController,
+              ),
+              const SizedBox(height: 15.0),
+              buildEditableField(
+                title: 'Email',
+                controller: _emailController,
+              ),
+              const SizedBox(height: 15.0),
+              buildEditableField(
+                title: 'Mobile',
+                controller: _mobileController,
+              ),
+              const SizedBox(height: 15.0),
+              buildEditableField(
+                title: 'Address',
+                controller: _addressController,
+              ),
+              const SizedBox(height: 15.0),
+              buildEditableField(
+                title: 'City',
+                controller: _cityController,
+              ),
+              const SizedBox(height: 15.0),
+              buildEditableField(
+                title: 'Pincode',
+                controller: _pincodeController,
+              ),
+              const SizedBox(height: 15.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Toggle editing mode
+                      setState(() {
+                        _isEditing = !_isEditing;
+                      });
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed)) {
                             return const Color.fromRGBO(33, 84, 115, 1.0);
-                          },
-                        ),
-                      ),
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(color: Colors.white),
+                          }
+                          return const Color.fromRGBO(33, 37, 41, 1.0);
+                        },
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 80.0),
-              ],
-            ),
+                    child: Text(_isEditing ? 'Cancel' : 'Edit', style: const TextStyle(color: Colors.white)),
+                  ),
+                  ElevatedButton(
+                    onPressed: _isEditing
+                        ? () async {
+                      showToast('Profile Updated Successfully');
+                      /* Perform save operation here */
+
+                      // Disable editing mode after saving
+                      setState(() {
+                        _isEditing = false;
+                      });
+                    }
+                        : null, // Disable the button if not editing
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return const Color.fromRGBO(33, 37, 41, 1.0);
+                          }
+                          return const Color.fromRGBO(33, 84, 115, 1.0);
+                        },
+                      ),
+                    ),
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 80.0),
+            ],
           ),
         ),
       ),

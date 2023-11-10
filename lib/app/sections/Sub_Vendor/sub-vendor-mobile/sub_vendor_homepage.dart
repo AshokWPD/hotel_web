@@ -2,6 +2,7 @@ import 'package:absolute_stay_site/app/sections/about/about.dart';
 import 'package:absolute_stay_site/app/sections/about/cookie_policy.dart';
 import 'package:absolute_stay_site/app/sections/about/privacy_policy.dart';
 import 'package:absolute_stay_site/app/sections/about/terms_and_conditions.dart';
+import 'package:absolute_stay_site/app/sections/main/main_section.dart';
 import 'package:absolute_stay_site/app/sections/user/user_mobile/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -72,10 +73,10 @@ class SubVendorHomePage extends StatelessWidget {
           ),
         );
         break;*/
-      case 'Owner Profile':
+      case 'Profile':
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const SubVendorProfileScreen(),
+            builder: (context) => const SubVendorProfileScreenMob(),
           ),
         );
         break;
@@ -99,9 +100,15 @@ class SubVendorHomePage extends StatelessWidget {
     Color customColor = const Color.fromRGBO(33, 84, 115, 1.0);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
-        centerTitle: true,
         backgroundColor: Colors.white,
+        title: const Text(
+          'Dashboard',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       drawer: SafeArea(
         child: Drawer(
@@ -126,7 +133,7 @@ class SubVendorHomePage extends StatelessWidget {
                 leading: Icon(menuIcons['Profile']),
                 title: const Text('Profile'),
                 onTap: () {
-                  handleDrawerSelection('Owner Profile', context);
+                  handleDrawerSelection('Profile', context);
                 },
               ),
               ListTile(
@@ -182,7 +189,7 @@ class SubVendorHomePage extends StatelessWidget {
                 leading: Icon(menuIcons['logout']),
                 title: const Text('Logout'),
                 onTap: () {
-                  handleDrawerSelection('logout', context);
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MainPage()));
                 },
               ),
               const SizedBox(height: 50.0),

@@ -1,4 +1,6 @@
+import 'package:absolute_stay_site/app/sections/Sub_Vendor/sub_vendor_web/sub_vendor_profile.dart';
 import 'package:absolute_stay_site/app/sections/about/about.dart';
+import 'package:absolute_stay_site/app/sections/main/main_section.dart';
 import 'package:absolute_stay_site/app/sections/owner/Owner_web/owner_profile_web.dart';
 import 'package:absolute_stay_site/app/sections/owner/Owner_web/payment_notificationWeb.dart';
 import 'package:absolute_stay_site/app/sections/owner/Owner_web/tenant_listWeb.dart';
@@ -92,7 +94,7 @@ class _SubVendorHomeWebState extends State<SubVendorHomeWeb> {
       //   return const AdminServicesPageWeb();
 
       case 'Sub-Vendor Profile':
-        return const SubVendorProfileScreen();
+        return const SubVendorProfileScreenWeb();
 
       // case 'My Property':
       //   return const AddPropertyWeb();
@@ -117,7 +119,7 @@ class _SubVendorHomeWebState extends State<SubVendorHomeWeb> {
     //   // Perform logout action
     //   break;
       default:
-        return const SubVendorProfileScreen();
+        return const SubVendorProfileScreenMob();
     // Handle other selections if needed
     }
   }
@@ -245,7 +247,7 @@ class _SubVendorHomeWebState extends State<SubVendorHomeWeb> {
                         leading: Icon(menuIcons['logout']),
                         title: const Text('Logout'),
                         onTap: () {
-
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MainPage()));
                         },
                       ),
                     ],
