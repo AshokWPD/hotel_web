@@ -10,6 +10,7 @@ class NavBarLogo extends StatelessWidget {
 
     return SizedBox(
       width: Responsive.isWeb(context) ? 300 : 150,
+
       child: Image.asset('assets/imgs/logo.png'),
     );
   }

@@ -1,7 +1,11 @@
 import 'package:absolute_stay_site/app/utils/TextField.dart';
 import 'package:absolute_stay_site/app/utils/input_field.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import '../model/usermodel.dart';
 
 
 class UserLoginForm extends StatefulWidget {
@@ -62,6 +66,83 @@ class _UserLoginFormState extends State<UserLoginForm> {
 //
 // }
 
+ void showToast(String message, var color) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: color,
+      textColor:color==Colors.black?Colors.white: Colors.black,
+    );
+  }
+
+// Register 
+Future<void> registerUser({
+  required String name,
+  required String email,
+  required String password,
+  required String mobile,
+  required String type,
+  required String address,
+  required double latitude,
+  required double longitude,
+  required String city,
+  required bool isAllowed, // Include "isAllowed" field
+  required String pincode,
+}) async {
+  try {
+     User? existingUser = await FirebaseAuth.instance
+        .fetchSignInMethodsForEmail(email)
+        .then((methods) {
+      if (methods.isNotEmpty) {
+        return FirebaseAuth.instance.currentUser;
+      }
+      return null;
+    });
+
+    if (existingUser != null) {
+      showToast('User already exist...',Colors.red);
+    }
+    UserCredential userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+
+    User? user = userCredential.user;
+
+    if (user != null) {
+      // Create a User Model
+      UserModel userModel = UserModel(
+        name: name,
+        email: email,
+        mobile: mobile,
+        type: type,
+        address: address,
+        latitude: latitude,
+        longitude: longitude,
+        city: city,
+        isAllowed: isAllowed, // Set isAllowed
+        pincode: pincode, vendorId: '',
+      );
+
+      // Store the user data in Cloud Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .set(userModel.toMap());
+showToast('Registered Successfully',Colors.green);
+      // Registration successful
+    }} on FirebaseAuthException catch (e) {
+    if (e.code == 'email-already-in-use') {
+      showToast('User already exist...',Colors.red);
+    } else {
+      print('Firebase Auth Error: ${e.code} - ${e.message}');
+      showToast('Somthing went wrong...',Colors.red);
+    }
+  } catch (e) {
+    // Handle registration errors
+    print(e.toString());
+  }
+}
+
 
   @override
   void initState() {
@@ -113,15 +194,7 @@ class _UserLoginFormState extends State<UserLoginForm> {
     super.dispose();
   }
 
-  void showToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
-    );
-  }
+
 
   /*Future<void> userRegistration() async {
     if (_formkey.currentState!.validate()) {
@@ -283,11 +356,21 @@ class _UserLoginFormState extends State<UserLoginForm> {
                   children: [
                     ElevatedButton(
                       onPressed: (){
-                        if (_formkey.currentState!.validate()) {
-                          //RegisterUser();
-                          showToast('Registered Successfully');
+                          if (_formkey.currentState!.validate()) {
+                          registerUser(name: _userNameController.text, 
+                          email: _userEmailController.text,
+                           password: _passwordController.text,
+                            mobile: _phoneNumberController.text, 
+                            type: 'user',
+                             address: 'Address',
+                              latitude: 0.0,
+                               longitude: 0.0, 
+                               city: 'city', 
+                               isAllowed: true,
+                                pincode: 'pincode');
+                          
                         }else{
-                          showToast('Can\'t Register, Fill All Fields');
+                          showToast('Can\'t Register, Fill All Fields',Colors.black);
                         }
                       },
                       style: ButtonStyle(

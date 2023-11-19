@@ -1,3 +1,5 @@
+import 'package:absolute_stay_site/app/sections/Sub_Vendor/tenentListSub.dart';
+import 'package:absolute_stay_site/app/sections/Sub_Vendor/vacantListSub.dart';
 import 'package:absolute_stay_site/app/sections/about/about.dart';
 import 'package:absolute_stay_site/app/sections/about/cookie_policy.dart';
 import 'package:absolute_stay_site/app/sections/about/privacy_policy.dart';
@@ -8,9 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart'as launcher;
 import '../../owner/Owner_mobile/payment_notificationMob.dart';
-import 'ListingManagementPage.dart';
-import 'ManageVacancyPage.dart';
-import 'sub_vendor_profile.dart';
+
 
 class SubVendorHomePage extends StatelessWidget {
   SubVendorHomePage({super.key});
@@ -48,14 +48,14 @@ class SubVendorHomePage extends StatelessWidget {
       case 'List of the Tenants':
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const TenantListPage(),
+            builder: (context) => const TenantListPageSub(),
           ),
         );
         break;
       case 'Vacant List':
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => VacantListPage(),
+            builder: (context) => VacantListPageSub(),
           ),
         );
         break;
@@ -76,7 +76,7 @@ class SubVendorHomePage extends StatelessWidget {
       case 'Profile':
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const SubVendorProfileScreenMob(),
+            builder: (context) => const UserProfileScreen(),
           ),
         );
         break;

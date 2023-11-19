@@ -1,8 +1,13 @@
-import 'package:absolute_stay_site/app/utils/TextField.dart';
-import 'package:absolute_stay_site/app/utils/input_field.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../utils/TextField.dart';
+import '../../utils/input_field.dart';
+
+
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key});
@@ -34,6 +39,25 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         _dialogHeight = 450; // Set your preferred height
       });
     });
+  }
+
+  resetPassword(email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            "Password Reset Email has been sent !",
+            style: TextStyle(fontSize: 18.0),
+          )));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              "No user found for that email.",
+              style: TextStyle(fontSize: 18.0),
+            )));
+      }
+    }
   }
 
   String? _validateEmail(String? value) {
@@ -89,126 +113,31 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
 // change password 
-// Future<void>changePassword()async{
-// final params={
-//   "email": _emailController.text,
-//   "newPassword": _passwordController.text
-//
-// };
-// try{
-//    final data= await serverClint.postData(params, serverUrl().geturl(RequestType.reset_password));
-//        if (data['status'] == 'success') {
-//              Fluttertoast.showToast(
-//          msg: 'password Changed Successfully',
-//          toastLength: Toast.LENGTH_SHORT,
-//          gravity: ToastGravity.BOTTOM,
-//          backgroundColor: Colors.black,
-//          textColor: Colors.white,
-//        );
-//         setState(() {
-//       isOtpsend=false;
-//       isOtpverified=true;
-//     });
-//     Navigator.pop(context);
-//        }else{
-//            Fluttertoast.showToast(
-//                               msg: 'Somthing went wrong!',
-//                               toastLength: Toast.LENGTH_SHORT,
-//                               gravity: ToastGravity.BOTTOM,
-//                               backgroundColor: Colors.black,
-//                               textColor: Colors.white,
-//                             );
-//       print('Request failed: ${data['message']}');
-//        }
-//
-//
-//
-// }catch(e){
-//   print("Exception occured: $e");
-//
-// }
-//
-// }
-//
-//
-// //verify otp
-// Future<void>verifyotp()async{
-// final params={
-//     "email": _emailController.text,
-//     "otp"  : _otpcontroller.text
-//
-// };
-// try{
-//    final data= await serverClint.postData(params, serverUrl().geturl(RequestType.verify_otp));
-//        if (data['status'] == 'success') {
-//              Fluttertoast.showToast(
-//          msg: 'OTP verified Successfully',
-//          toastLength: Toast.LENGTH_SHORT,
-//          gravity: ToastGravity.BOTTOM,
-//          backgroundColor: Colors.black,
-//          textColor: Colors.white,
-//        );
-//         setState(() {
-//       isOtpsend=false;
-//       isOtpverified=true;
-//     });
-//        }else{
-//            Fluttertoast.showToast(
-//                               msg: 'Invalid OTP!',
-//                               toastLength: Toast.LENGTH_SHORT,
-//                               gravity: ToastGravity.BOTTOM,
-//                               backgroundColor: Colors.black,
-//                               textColor: Colors.white,
-//                             );
-//       print('Request failed: ${data['message']}');
-//        }
-//
-//
-//
-// }catch(e){
-//   print("Exception occured: $e");
-//
-// }
-//
-// }
-//
-// //forgot password
-// Future<void>forgotPassword()async{
-// final params={
-//   "email" : _emailController.text
-// };
-// try{
-//    final data= await serverClint.postData(params, serverUrl().geturl(RequestType.forgot_password));
-//        if (data['status'] == 'success') {
-//              Fluttertoast.showToast(
-//          msg: 'Mail Sent Successfully',
-//          toastLength: Toast.LENGTH_SHORT,
-//          gravity: ToastGravity.BOTTOM,
-//          backgroundColor: Colors.black,
-//          textColor: Colors.white,
-//        );
-//         setState(() {
-//       isOtpsend=true;
-//     });
-//        }else{
-//            Fluttertoast.showToast(
-//                               msg: 'Mail Sent Failed!',
-//                               toastLength: Toast.LENGTH_SHORT,
-//                               gravity: ToastGravity.BOTTOM,
-//                               backgroundColor: Colors.black,
-//                               textColor: Colors.white,
-//                             );
-//       print('Request failed: ${data['message']}');
-//        }
-//
-//
-//
-// }catch(e){
-//   print("Exception occured: $e");
-//
-// }
-//
-// }
+Future<void>changePassword()async{
+
+
+}
+
+void showToast(String message, var color) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: color,
+      textColor:color==Colors.red?Colors.black: Colors.white,
+    );
+  }
+
+//verify otp  
+Future<void>verifyotp()async{
+
+}
+
+//forgot password
+Future<void>forgotPassword()async{
+
+
+}
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +145,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
 
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 600),
       curve: Curves.easeInOut,
       height: _dialogHeight+35,
       width: _dialogWidth,
@@ -261,7 +190,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
                 ClipOval(
                   child: Lottie.asset(
-                    'assets/gif/resetpassword.json', // Replace with your animation file path
+                    'images/resetpassword.json', // Replace with your animation file path
                     width: 80,
                     height: 80,
                   ),
@@ -336,9 +265,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
                           );
-                        //verifyotp();
+                        verifyotp();
                       }:isOtpverified?(){
-                        //changePassword();
+                        changePassword();
                       } : () {
                         if (_formKey.currentState!.validate()) {
 
@@ -351,7 +280,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
                           );
-                         // forgotPassword();
+                          resetPassword(_emailController.text);
 
                         
                         }

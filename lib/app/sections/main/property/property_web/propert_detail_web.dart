@@ -1,10 +1,14 @@
 import 'package:absolute_stay_site/usable/PropertySpecification.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../model/favModel.dart';
+import '../../../model/propertyModel.dart';
 import 'propertySpecWeb.dart';
 
 class PropertyDetailPageWeb extends StatefulWidget {
@@ -21,6 +25,9 @@ class _PropertyDetailPageWebState extends State<PropertyDetailPageWeb> {
     'images/image3.png',
     'images/image4.png',
   ];
+   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+bool isfetching = false;
 
   Color customColor = const Color.fromRGBO(33, 84, 115, 1.0);
 
@@ -34,6 +41,65 @@ class _PropertyDetailPageWebState extends State<PropertyDetailPageWeb> {
       backgroundColor: Colors.black,
       textColor: Colors.white,
     );
+  }
+  Future<PropertyModel?> fetchPropertyData() async {
+  try {
+    DocumentSnapshot propertySnapshot = await FirebaseFirestore.instance
+        .collection('Property')
+        .doc('widget.ProppId')
+        .get();
+
+    if (propertySnapshot.exists) {
+       setState(() {
+    isfetching=true;
+
+  });
+      return PropertyModel.fromMap(propertySnapshot.id, propertySnapshot.data() as Map<String, dynamic>);
+    } else {
+      return null; // Property not found
+    }
+  } catch (e) {
+    print('Error fetching property data: $e');
+    // Handle the error as needed
+    return null;
+  }
+}
+
+PropertyModel? propertitem;
+void getProperty()async{
+ propertitem = await fetchPropertyData();
+
+if (propertitem != null) {
+  setState(() {
+    isfetching=true;
+
+  });
+ 
+}}
+
+Future<void> addToFavorites(FavoriteModel favorite) async {
+  try {
+    CollectionReference favorites = FirebaseFirestore.instance.collection('favorites');
+
+    // Add the favorite data to Firestore
+    await favorites.add(favorite.toMap());
+                              showToast('Added to Favorites');
+
+  } catch (e) {
+                              showToast('Somthing went wrong');
+
+    print('Error adding to favorites: $e');
+    // Handle the error as needed
+  }
+}
+
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getProperty();
   }
 
   @override

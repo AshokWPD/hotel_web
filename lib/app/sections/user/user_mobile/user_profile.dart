@@ -1,7 +1,13 @@
+import 'dart:io';
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
-import 'package:http/http.dart'as http;
+
+import '../../model/usermodel.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({Key? key}) : super(key: key);
@@ -18,66 +24,104 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _pincodeController = TextEditingController();
-   //profileModel? _profile;
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+UserModel? userData;
+Future<UserModel?> getUserData(String uid) async {
+  
+  try {
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .get();
 
-
+    if (userSnapshot.exists) {
+      return UserModel.fromMap(userSnapshot.data() as Map<String, dynamic>);
+    } else {
+      return null; // User not found
+    }
+  } catch (e) {
+    print(e.toString());
+    return null;
+  }
+}
   bool _isEditing = false;
   bool isfetching = false;
   Color customColor = const Color.fromRGBO(33, 84, 115, 1.0);
 
-  void showToast(String message) {
+  void showToast(String message, var color) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
+      backgroundColor: color,
+      textColor:color==Colors.black?Colors.white: Colors.black,
     );
   }
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   //fetchProfile();
-  //
-  // }
+Future<void> updateUserDetails(String uid, String name, String mobile, String address, String city, String pincode) async {
+  try {
+    await FirebaseFirestore.instance.collection('users').doc(uid).update({
+      'name': name,
+      'mobile': mobile,
+      'address': address,
+      'city': city,
+      'pincode': pincode,
+    });
+  } catch (e) {
+    print('Error updating user details: $e');
+    // Handle the error as needed
+  }
+}
+
+
+  @override
+  void initState() {
+
+    // TODO: implement initState
+    super.initState();
+    fetchProfile();
+    
+  }
 
 
 
 
 
 // profileModel? data;
-//  Future<void> fetchProfile() async {
-//        var UserID = await File_server.getLDB("userID") ?? "";
-//
-//   final params = {"user_id":"$UserID"};
-//
-//   try {
-//     final data = await serverClint.postData(params, serverUrl().geturl(RequestType.getUserData));
-//
-//     if (data['status'] == 'success') {
-//       // Request was successful
-//       _profile = profileModel.fromJson(data['data']);
-//
-//       setState(() {
-//         // Update your UI with the profile data
-//         _nameController.text = _profile!.name;
-//         _emailController.text = _profile!.email;
-//         _mobileController.text = _profile!.mobile;
-//         _addressController.text = _profile!.address;
-//         _cityController.text = _profile!.city; // You can set a default value
-//         _pincodeController.text = _profile!.pincode;
-//         isfetching = true; // You can set a default value
-//       });
-//     } else {
-//       // Request was not successful
-//       print('Request failed: ${data['message']}');
-//     }
-//   } catch (e) {
-//     print('Failed to fetch profile: $e');
-//   }
-// }
+void fetchProfile() async {
+          User? user = _auth.currentUser;
+
+if (user != null) {
+      // User is already logged in, retrieve user data
+       userData = await getUserData(user.uid);
+
+
+         setState(() {
+        _nameController.text=userData!.name;
+        _emailController.text=userData!.email;
+        _mobileController.text=userData!.mobile;
+        _addressController.text=userData!.address;
+        _cityController.text=userData!.city;
+        _pincodeController.text=userData!.pincode;
+        isfetching=true;
+       });
+    } else {
+        setState(() {
+        _nameController.text='';
+        _emailController.text='';
+        _mobileController.text='';
+        _addressController.text='';
+        _cityController.text='';
+        _pincodeController.text='';
+       });
+      showToast('Somthing went wrong...',Colors.red);
+
+  
+    } 
+}
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -109,32 +153,33 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             const SizedBox(height: 15.0),
             buildEditableField(
               title: 'Name',
-              controller: _nameController,
+              controller: _nameController, isenable: _isEditing,
+
             ),
             const SizedBox(height: 15.0),
             buildEditableField(
               title:  'Email',
-              controller: _emailController,
+              controller: _emailController, isenable: false,
             ),
             const SizedBox(height: 15.0),
             buildEditableField(
               title: 'Mobile',
-              controller: _mobileController,
+              controller: _mobileController, isenable: _isEditing,
             ),
             const SizedBox(height: 15.0),
             buildEditableField(
               title: 'Address',
-              controller: _addressController,
+              controller: _addressController, isenable: _isEditing,
             ),
             const SizedBox(height: 15.0),
             buildEditableField(
               title: 'City',
-              controller: _cityController,
+              controller: _cityController, isenable: _isEditing,
             ),
             const SizedBox(height: 15.0),
             buildEditableField(
               title: 'Pincode',
-              controller: _pincodeController,
+              controller: _pincodeController, isenable: _isEditing,
             ),
             const SizedBox(height: 15.0),
             Row(
@@ -162,7 +207,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ElevatedButton(
                   onPressed: _isEditing
                       ? () async {
-                    showToast('Profile Updated Successfully');
+                        updateUserDetails(
+                          FirebaseAuth.instance.currentUser!.uid,
+                         _nameController.text,
+                          _mobileController.text,
+                           _addressController.text,
+                            _cityController.text,
+                             _pincodeController.text);
+                    showToast('Profile Updated Successfully',Colors.black);
                     /* Perform save operation here */
 
                     // Disable editing mode after saving
@@ -198,6 +250,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget buildEditableField({
     required String title,
     required TextEditingController controller,
+   required bool isenable,
   }) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -220,7 +273,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           ),
           child: TextFormField(
             controller: controller,
-            enabled: _isEditing, // Enable or disable the text field based on the editing mode
+            enabled: isenable, // Enable or disable the text field based on the editing mode
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: title,

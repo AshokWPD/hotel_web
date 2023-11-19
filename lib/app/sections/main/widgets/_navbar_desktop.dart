@@ -26,7 +26,7 @@ class _NavbarWebState extends State<NavbarWeb> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return CustomDialog(); // Use the CustomDialog widget
+        return const CustomDialog(); // Use the CustomDialog widget
       },
     );
   }

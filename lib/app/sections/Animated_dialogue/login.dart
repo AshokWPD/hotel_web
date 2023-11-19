@@ -1,11 +1,13 @@
 import 'package:absolute_stay_site/app/sections/owner/owner.dart';
 import 'package:absolute_stay_site/app/sections/user/user.dart';
 import 'package:absolute_stay_site/app/utils/input_field.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../Sub_Vendor/sub_vendor.dart';
+import '../model/usermodel.dart';
 import 'forgetpassword.dart';
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -25,35 +27,133 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-
 //Login 
-void loginuser(){
-  if (_emailController.text == 'user@gmail.com' &&
-      _passwordController.text == 'user') {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) =>
-        const User(), // Replace with your user page
-      ),
-    );
-  } else if (_emailController.text == 'owner@gmail.com' &&
-      _passwordController.text == 'owner') {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) =>
-        const Owner(), // Replace with your owner page
-      ),
-    );
-  } else if (_emailController.text == 'vendor@gmail.com' &&
-      _passwordController.text == 'vendor') {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) =>
-            const SubVendor(), // Replace with your vendor page
-      ),
-    );
+ 
+
+  Future<User?> loginUser(String email, String password) async {
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+
+    User? user = userCredential.user;
+
+     if (user != null) {
+              showToast("Login success!", Colors.green);
+
+           return user;
+      } else {
+        showToast("Email Not Found!", Colors.red);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        showToast("Email Not Found!", Colors.red);
+      } else if (e.code == 'wrong-password') {
+        showToast("Wrong Password!", Colors.red);
+      } else {
+        showToast("Email Not Found!", Colors.red);
+      }
+
+  } catch (e) {
+    print(e.toString());
+    return null;
+  }
+  return null;
+}
+
+Future<UserModel?> getUserData(String uid) async {
+  try {
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .get();
+
+    if (userSnapshot.exists) {
+      return UserModel.fromMap(userSnapshot.data() as Map<String, dynamic>);
+    } else {
+      return null; // User not found
+    }
+  } catch (e) {
+    print(e.toString());
+    return null;
   }
 }
+
+// Example login and data retrieval usage
+void loginAndRetrieveData() async {
+  String email = _emailController.text; // Replace with user's email
+  String password = _passwordController.text;    // Replace with user's password
+
+  // Login with email and password
+  User? user = await loginUser(email, password);
+
+  if (user != null) {
+    // User is logged in, retrieve user data
+    UserModel? userData = await getUserData(user.uid);
+
+    if (userData != null) {
+      print('User Name: ${userData.name}');
+      print('User Mobile: ${userData.mobile}');
+ if (userData.type== 'user') {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) =>
+               Userpage(), // Replace with your user page
+        ),
+      );
+    } else if (userData.type== 'owner') {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) =>
+              const Owner(), // Replace with your owner page
+        ),
+      );
+    } else if (userData.type== 'vendor') {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) =>
+              SubVendor(), // Replace with your vendor page
+        ),
+      );
+    }
+      // Access other user data as needed
+    } else {
+      print('User data not found.');
+    }
+  } else {
+    print('Login failed.');
+  }
+}
+/////////////////////////////////////////////////////////////
+
+// //Login 
+// void loginuser(){
+//   if (_emailController.text == 'user@gmail.com' &&
+//       _passwordController.text == 'user') {
+//     Navigator.of(context).pushReplacement(
+//       MaterialPageRoute(
+//         builder: (context) =>
+//         const User(), // Replace with your user page
+//       ),
+//     );
+//   } else if (_emailController.text == 'owner@gmail.com' &&
+//       _passwordController.text == 'owner') {
+//     Navigator.of(context).pushReplacement(
+//       MaterialPageRoute(
+//         builder: (context) =>
+//         const Owner(), // Replace with your owner page
+//       ),
+//     );
+//   } else if (_emailController.text == 'vendor@gmail.com' &&
+//       _passwordController.text == 'vendor') {
+//     Navigator.of(context).pushReplacement(
+//       MaterialPageRoute(
+//         builder: (context) =>
+//             const SubVendor(), // Replace with your vendor page
+//       ),
+//     );
+//   }
+// }
+
 
 
   @override
@@ -61,7 +161,7 @@ void loginuser(){
     super.initState();
     Future.delayed(const Duration(milliseconds: 50), () {
       setState(() {
-        _dialogHeight = 420; // Set your preferred height
+        _dialogHeight = 450; // Set your preferred height
       });
     });
   }
@@ -79,6 +179,7 @@ void loginuser(){
     }
     return null;
   }
+
 
   // void _loginUser(BuildContext context) {
   //   if (_formKey.currentState!.validate()) {
@@ -147,13 +248,13 @@ void loginuser(){
   //   }
   // }
 
-   void showToast(String message) {
+    void showToast(String message, var color) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
+      backgroundColor: color,
+      textColor:color==Colors.black?Colors.white: Colors.black,
     );
   }
 
@@ -287,7 +388,9 @@ void loginuser(){
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                      ElevatedButton(
-                      onPressed: () => loginuser(), // Pass context here
+                      onPressed: () {
+                        loginAndRetrieveData();
+                        } , // Pass context here
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.resolveWith<Color>(
                               (Set<MaterialState> states) {

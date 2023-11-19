@@ -1,20 +1,25 @@
 import 'package:absolute_stay_site/app/sections/about/about.dart';
 import 'package:absolute_stay_site/app/sections/main/main_section.dart';
+import 'package:absolute_stay_site/app/sections/owner/Owner_web/MyPropertyWeb.dart';
 import 'package:absolute_stay_site/usable/core/color/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart' as launcher;
+import '../../user/user_web/user_profile_web.dart';
 import 'ServiceWeb.dart';
 import 'SubVendor_permissionWeb.dart';
 import 'TicketDetailsPageWeb.dart';
 import 'addProperty_web.dart';
-import 'owner_profile_web.dart';
 import 'payment_notificationWeb.dart';
 import 'tenant_listWeb.dart';
 import 'vacant_listWeb.dart';
 
+
 class OwnerHomeWeb extends StatefulWidget {
-  const OwnerHomeWeb({super.key});
+  final Widget pagename;
+  final bool usedrawer;
+
+  const OwnerHomeWeb({super.key, required this.pagename, required this.usedrawer});
 
   @override
   State<OwnerHomeWeb> createState() => _OwnerHomeWebState();
@@ -22,9 +27,10 @@ class OwnerHomeWeb extends StatefulWidget {
 
 class _OwnerHomeWebState extends State<OwnerHomeWeb> {
   Color customColor = const Color.fromRGBO(33, 84, 115, 1.0);
-
+bool isDrawerclick=false;
   final Map<String, IconData> menuIcons = {
     'Profile': Icons.account_circle,
+    'Add Property': Icons.local_hotel_sharp,
     'Add Sub-Vendor': Icons.person,
     'adminServices': Icons.business,
     'Tenant List': Icons.people,
@@ -56,6 +62,17 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
       },
     );
   }
+    String casetex = 'Add Property';
+
+
+  @override
+  void initState() {
+    setState(() {
+      isDrawerclick=widget.usedrawer;
+    });
+    // TODO: implement initState
+    super.initState();
+  }
 
   void _launchPhone(String phoneNumber) async {
     final Uri uri = Uri.parse('tel:$phoneNumber');
@@ -77,35 +94,47 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
     }
   }
 
-  var casetex = 'My Property';
 
   Widget handleDrawerSelection(String value, BuildContext context) {
     switch (value) {
       case 'Tenant List':
+    
         return const TenantListPageWeb();
 
       case 'Manage Payment':
+     
         return const PaymentNotificationPageWeb();
 
       case 'Add Sub-Vendor':
+      
         return const SubVendorPermissionWeb();
 
       case 'adminServices':
+      
         return const AdminServicesPageWeb();
 
       case 'Owner Profile':
-        return const OwnerProfileScreenWeb();
+      
+        return const UserProfileWeb();
 
-      case 'My Property':
+     case 'Add Property':
+     
         return const AddPropertyWeb();
 
+      case 'My Property':
+      
+        return const MyPropertyAppWeb();
+
       case 'Vacant List':
+      
         return const VacantListPageWeb();
 
       case 'Ticket list':
+     
         return const VendorTicketListPageweb();
 
       case 'About Us':
+      
         return const AboutPage();
 
       //case 'logout':
@@ -119,7 +148,7 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
       //   // Perform logout action
       //   break;
       default:
-        return const OwnerHomeWeb();
+        return  OwnerHomeWeb(pagename:AddPropertyWeb(), usedrawer: true,);
         // Handle other selections if needed
     }
   }
@@ -157,15 +186,28 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
                         title: const Text('Profile'),
                         onTap: () {
                           setState(() {
+                            isDrawerclick=true;
                             casetex = 'Owner Profile';
                           });
                         },
                       ),
+                       ListTile(
+                        leading: Icon(menuIcons['Add Property']),
+                        title: const Text('Add Property'),
+                        onTap: () {
+                          setState(() {
+                            isDrawerclick=true;
+                            casetex = 'Add Property';
+                          });
+                        },
+                      ),
+                      
                       ListTile(
                         leading: Icon(menuIcons['My Property']),
                         title: const Text('My Property'),
                         onTap: () {
                           setState(() {
+                            isDrawerclick=true;
                             casetex = 'My Property';
                           });
                         },
@@ -183,6 +225,7 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
                         title: const Text('List of the Tenants'),
                         onTap: () {
                           setState(() {
+                            isDrawerclick=true;
                             casetex = 'Tenant List';
                           });
                         },
@@ -192,6 +235,7 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
                         title: const Text('Manage Payment'),
                         onTap: () {
                           setState(() {
+                            isDrawerclick=true;
                             casetex = 'Manage Payment';
                           });
                         },
@@ -201,6 +245,7 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
                         title: const Text('Vacant List'),
                         onTap: () {
                           setState(() {
+                            isDrawerclick=true;
                             casetex = 'Vacant List';
                           });
                         },
@@ -210,6 +255,7 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
                         title: const Text('Tenant Raised Tickets'),
                         onTap: () {
                           setState(() {
+                            isDrawerclick=true;
                             casetex = 'Ticket list';
                           });
                         },
@@ -219,6 +265,7 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
                         title: const Text('Services Provided by Admin'),
                         onTap: () {
                           setState(() {
+                            isDrawerclick=true;
                             casetex = 'adminServices';
                           });
                         },
@@ -228,6 +275,7 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
                         title: const Text('About Us'),
                         onTap: () {
                           setState(() {
+                            isDrawerclick=true;
                             casetex = 'About Us';
                           });
                         },
@@ -255,7 +303,7 @@ class _OwnerHomeWebState extends State<OwnerHomeWeb> {
                 ),
               ),
               Expanded(
-                child: handleDrawerSelection(casetex, context),
+                child:isDrawerclick? handleDrawerSelection(casetex, context):widget.pagename,
               ),
             ],
           ),

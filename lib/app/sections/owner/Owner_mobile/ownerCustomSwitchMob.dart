@@ -3,7 +3,7 @@ import 'approved_content_mob.dart';
 import 'unapproved_contentMob.dart';
 
 class OwnerCustomSwitchMobile extends StatefulWidget {
-  const OwnerCustomSwitchMobile({Key? key}) : super(key: key);
+  const OwnerCustomSwitchMobile({super.key});
 
   @override
   _OwnerCustomSwitchMobileState createState() => _OwnerCustomSwitchMobileState();
@@ -26,8 +26,8 @@ class _OwnerCustomSwitchMobileState extends State<OwnerCustomSwitchMobile>
     return Column(
       children: [
         SizedBox(
-          width: 220.0,
-          height: 100.0,
+          width: 500.0,
+          height: 110.0,
           child: Material(
             child: Column(
               children: [

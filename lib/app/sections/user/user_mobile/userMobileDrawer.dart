@@ -2,6 +2,7 @@ import 'package:absolute_stay_site/app/sections/about/about.dart';
 import 'package:absolute_stay_site/app/sections/main/main_section.dart';
 import 'package:absolute_stay_site/app/sections/main/property/property_mobile/PropertyListingPage.dart';
 import 'package:absolute_stay_site/app/sections/main/property/propertylist.dart';
+import 'package:absolute_stay_site/app/sections/user/user_mobile/bookingHistory.dart';
 import 'package:absolute_stay_site/app/sections/user/user_web/UserCustomdialogue.dart';
 import 'package:absolute_stay_site/app/sections/user/user_web/user_navbar_utils.dart';
 import 'package:absolute_stay_site/app/utils/CustomDialog.dart';
@@ -10,6 +11,7 @@ import 'package:absolute_stay_site/usable/core/color/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import '../../../../usable/widgets/navbar_logo.dart';
+import 'favorites.dart';
 
 class UserMobileDrawer extends StatefulWidget {
   const UserMobileDrawer({super.key});
@@ -48,6 +50,12 @@ class _UserMobileDrawerState extends State<UserMobileDrawer> {
                   MaterialButton(onPressed: () {
                     // Navigate to the corresponding page based on the selected item
                     switch (e.key) {
+                      case 1:
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const BookingHistoryPage()));
+                         break;
+                      case 2:
+                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FavoritesPage()));
+                         break;
                       case 0:
                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PropertyList()));
                         break;

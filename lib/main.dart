@@ -6,13 +6,13 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp(
       options: const FirebaseOptions(
-          apiKey: "AIzaSyCXi0CdVoBAzEDLJxKsrQOcXpGpdpfmWnk",
-          authDomain: "absolute-stay-55f8d.firebaseapp.com",
-          projectId: "absolute-stay-55f8d",
-          storageBucket: "absolute-stay-55f8d.appspot.com",
-          messagingSenderId: "38920551381",
-          appId: "1:38920551381:web:2e3b1b855c9b1bab4c5b5c",
-          measurementId: "G-2MZZTWNVH9"
+          apiKey: "AIzaSyAO-uazil50EROYAnEi7Erxx0RTIt_UX8E",
+  authDomain: "absoluter-server.firebaseapp.com",
+  projectId: "absoluter-server",
+  storageBucket: "absoluter-server.appspot.com",
+  messagingSenderId: "25099964769",
+  appId: "1:25099964769:web:85e48921072405c0d87520",
+  measurementId: "G-5V038ND7DJ"
       ));
   runApp(const MySite());
 

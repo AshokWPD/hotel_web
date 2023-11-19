@@ -7,13 +7,17 @@ import 'property_web/propert_detail_web.dart';
 import 'property_web/property_list_web.dart';
 
 class PropertyDetail extends StatelessWidget {
-  const PropertyDetail({super.key});
+ final String  ProppId;
+  const PropertyDetail({super.key, required this.ProppId});
 
   @override
   Widget build(BuildContext context) {
-    return const Responsive(
-      mobile: PropertyDetailPageMob(),
-      tablet: PropertyDetailPageMob(),
-      web: PropertyDetailPageWeb(),);
+    return  Responsive(
+      mobile: PropertyDetailPageMob(ProppId:ProppId,),
+      tablet: PropertyDetailPageMob(ProppId: ProppId,),
+            web:PropertyDetailPageMob(ProppId: ProppId,),
+
+      // web: PropertyDetailPageWeb(),
+      );
   }
 }

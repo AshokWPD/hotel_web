@@ -5,7 +5,7 @@ import 'occupied_list_mob.dart';
 import 'unoccupied_listMob.dart';
 
 class VacantCustomSwitchMobile extends StatefulWidget {
-  const VacantCustomSwitchMobile({Key? key}) : super(key: key);
+  const VacantCustomSwitchMobile({super.key});
 
   @override
   _VacantCustomSwitchMobileState createState() => _VacantCustomSwitchMobileState();

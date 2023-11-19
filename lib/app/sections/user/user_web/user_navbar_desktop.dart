@@ -1,11 +1,8 @@
 import 'package:absolute_stay_site/app/sections/Animated_dialogue/login_options.dart';
 import 'package:absolute_stay_site/app/sections/user/user_web/user_profile_web.dart';
-import 'package:absolute_stay_site/app/utils/CustomDialog.dart';
-import 'package:absolute_stay_site/app/utils/navbar_utils.dart';
 import 'package:absolute_stay_site/usable/core/color/colors.dart';
 import 'package:absolute_stay_site/usable/core/providers/drawer_provider.dart';
 import 'package:absolute_stay_site/usable/core/res/responsive.dart';
-import 'package:absolute_stay_site/usable/widgets/navbar_actions_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -13,6 +10,7 @@ import '../../../../usable/widgets/navbar_logo.dart';
 import 'UserCustomdialogue.dart';
 import 'user_navbar_actions_button.dart';
 import 'user_navbar_utils.dart';
+
 
 class UserNavbarWeb extends StatefulWidget {
   const UserNavbarWeb({super.key});
@@ -38,8 +36,7 @@ class _UserNavbarWebState extends State<UserNavbarWeb> {
   void _hideDialog() {
     setState(() {
       isDialogVisible = false; // Hide the dialog
-    });
-  }
+    });}
 
 
   @override

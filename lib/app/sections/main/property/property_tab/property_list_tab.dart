@@ -1,9 +1,11 @@
 import 'package:absolute_stay_site/app/sections/main/property/property_mobile/PropertyDetailPage.dart';
 import 'package:absolute_stay_site/usable/core/animations/entrance_fader.dart';
 import 'package:absolute_stay_site/usable/core/color/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../model/propertyModel.dart';
 import '../propertydetail.dart';
 
 class PropertyData {
@@ -44,7 +46,7 @@ class PropertyCard extends StatelessWidget {
         // Navigate to the property detail page here
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => PropertyDetail(),
+            builder: (context) => PropertyDetail(ProppId: '',),
           ),
         );
       },
@@ -108,6 +110,59 @@ class PropertyListingPageTab extends StatefulWidget {
 }
 
 class _PropertyListingPageTabState extends State<PropertyListingPageTab> {
+
+//  List<PropertyModel> properties = [];
+
+
+// @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
+//         fetchProperties();
+
+//   }
+
+// bool isfetching =false;
+// Future<List<PropertyModel>> getAllProperties() async {
+//   try {
+//     final QuerySnapshot querySnapshot =
+//         await FirebaseFirestore.instance
+//         .collection('Property')
+//         .where('status', isEqualTo: "Approved")
+//         .get();
+
+//     final List<PropertyModel> properties = querySnapshot.docs.map((doc) {
+//       final data = doc.data() as Map<String, dynamic>;
+//       return PropertyModel.fromMap(doc.id, data);
+//     }).toList();
+
+//     return properties;
+//   } catch (e) {
+//     print('Error fetching properties: $e');
+//     throw e; // Handle the error as needed
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+//   Future<void> fetchProperties() async {
+//     // Fetch the properties and update the state
+//     final List<PropertyModel> fetchedProperties = await getAllProperties();
+//     setState(() {
+//       properties = fetchedProperties;
+//       isfetching=true;
+//     });
+//   }
+
+
+
   List<PropertyData> properties = [
     PropertyData(
       image: 'images/image1.png',

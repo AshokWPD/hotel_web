@@ -26,7 +26,7 @@ class _OwnerCustomSwitchMobileState extends State<OwnerCustomSwitchMobile>
     return Column(
       children: [
         SizedBox(
-          width: 220.0,
+          width: 300.0,
           height: 100.0,
           child: Material(
             child: Column(

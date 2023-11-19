@@ -1,11 +1,14 @@
 import 'package:absolute_stay_site/app/sections/about/about.dart';
 import 'package:absolute_stay_site/app/sections/main/property/property_mobile/PropertyListingPage.dart';
 import 'package:absolute_stay_site/app/sections/main/property/propertylist.dart';
+import 'package:absolute_stay_site/app/sections/user/user_mobile/bookingHistory.dart';
 import 'package:absolute_stay_site/usable/core/animations/entrance_fader.dart';
 import 'package:absolute_stay_site/usable/core/color/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../main/main_section.dart';
+import '../user_mobile/favorites.dart';
+
 
 
 class UserNavBarActionButton extends StatefulWidget {
@@ -38,6 +41,12 @@ class _UserNavBarActionButtonState extends State<UserNavBarActionButton> {
         },
         onTap: () {
           switch (widget.index+1) {
+            case 2:
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const BookingHistoryPage()));
+            break;
+            case 3:
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FavoritesPage()));
+            break;
             case 1:
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PropertyList()));
               break;
