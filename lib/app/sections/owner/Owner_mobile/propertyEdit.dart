@@ -312,6 +312,7 @@ void updatePropertydatas() async {
     latitude: existingProperty!.latitude,
     longitude: existingProperty!.longitude,
     id: existingProperty!.id,
+    createdAt: DateTime.now(), 
   );
   await updatePropertyDataImage(property, _roomImages, _propertyImages);
   Navigator.pop(context);

@@ -156,6 +156,7 @@ void _pickImages(ImageType imageType) async {
     latitude: 123.456,
     longitude: -78.901,
     id: '', 
+    createdAt: DateTime.now(), 
   );
 
   try {

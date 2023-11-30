@@ -14,6 +14,7 @@ class LoginOptions extends StatefulWidget {
 }
 
 
+
 class _LoginOptionsState extends State<LoginOptions> {
   double _dialogHeight = 0.0;
   final double _dialogWidth = 350;

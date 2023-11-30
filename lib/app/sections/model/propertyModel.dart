@@ -19,6 +19,8 @@ class PropertyModel {
   final List<String> propertyImages;
   final double latitude;
   final double longitude;
+    DateTime createdAt;
+
 
   PropertyModel({
     required this.id,
@@ -41,6 +43,7 @@ class PropertyModel {
     required this.propertyImages,
     required this.latitude,
     required this.longitude,
+    required this.createdAt
   });
 
   // Create a PropertyModel instance from a Map
@@ -66,6 +69,7 @@ class PropertyModel {
       propertyImages: List<String>.from(map['propertyImages']),
       latitude: (map['latitude'] as num).toDouble(),
       longitude: (map['longitude'] as num).toDouble(),
+      createdAt: map['createdAt'] != null ? DateTime.parse(map['createdAt']) : DateTime.now(),
     );
   }
 
@@ -91,6 +95,7 @@ class PropertyModel {
       'propertyImages': propertyImages,
       'latitude': latitude,
       'longitude': longitude,
+      'createdAt': createdAt.toUtc().toIso8601String(),
     };
   }
 }
